@@ -1,0 +1,19 @@
+the PV flow include below infomation:
+
+step1: merge all required ip/macro/stdcells for PV check base on PR results.
+  calibre_ipmerge.tcl
+  
+  
+
+
+
+
+calibre_dummyfill.tcl
+calibre_dummymerge.tcl
+
+calibre_drccheck.tcl
+calibre_antcheck.tcl      
+calibre_bumpcheck.tcl  
+calibre_lvscheck.tcl
+
+perc
