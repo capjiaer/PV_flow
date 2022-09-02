@@ -1,19 +1,27 @@
-the PV flow include below infomation:
+The PV flow include below infomation:
 
-step1: merge all required ip/macro/stdcells for PV check base on PR results.
-  calibre_ipmerge.tcl
+Step1: Merge all required ip/macro/stdcells for PV check base on PR results.
+  PV_flow/actions/calibre_ipmerge.tcl
+
+Step2: After file merged, you need to check PG short first incase any strange issues happened in your design before other PV check
+  PV_flow/actions/calibre_lvscheck.tcl -> PG short/open check only
   
-  
+Step3: If PG check pass try perc check, PERC check include P2P/CD/TOPO check here (base on TSMC's request)
+  perc part required:
+  PV_flow/actions/perc/calibre_perc.tcl
 
+If step3 finished and everything correct, then go to next steps: ============================
 
+Step4: After merge file, you need to setup dummy insertion for the PV check, then merege dummyfill gds files
+  PV_flow/actions/calibre_dummyfill.tcl
+  PV_flow/actions/calibre_dummymerge.tcl
 
+Step5: After dummy file merged, you need to check DRC/LVS/ANT/BUMP info 
+  PV_flow/actions/calibre_drccheck.tcl
+  PV_flow/actions/calibre_antcheck.tcl      
+  PV_flow/actions/calibre_bumpcheck.tcl  
+  PV_flow/actions/calibre_lvscheck.tcl
 
-calibre_dummyfill.tcl
-calibre_dummymerge.tcl
-
-calibre_drccheck.tcl
-calibre_antcheck.tcl      
-calibre_bumpcheck.tcl  
-calibre_lvscheck.tcl
-
-perc
+Step6: Run final PERC
+  PV_flow/actions/perc/calibre_perc.tcl
+  PV_flow/actions/perc/calibre_cnod.tcl (for advance node)
