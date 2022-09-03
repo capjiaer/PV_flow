@@ -1,5 +1,5 @@
 #0>> Import packages for the furture usage
-lappend auto_path "/home/apchen1/project/module_setup/calibre/module"
+lappend auto_path "PV_flow/module_setup/calibre/module"
 package require file_edit_func 
 package require gen_deck_header
 package require data_func
@@ -137,7 +137,7 @@ if {[info exists pv_calibre(lvs,skip_v2lvs)] == 0 || $pv_calibre(lvs,skip_v2lvs)
 								outcdl $outcdl							\
 				]
 	# Create mapdict for rule_temp::write_file to genarate final run cshfile
-	set v2lvs_temp	[file join /home/apchen1/project/module_setup/calibre/template/lvs v2lvs.csh.temp]
+	set v2lvs_temp	[file normalize [file join ./PV_flow/template/lvs v2lvs.csh.temp]]
 	rule_temp::write_file $v2lvs_temp $cshfile $mapdict -permissions rwxr-xr-x
 	# Take $outcdl as lvs_netlist
 	set lvs_netlist $outcdl
@@ -210,7 +210,7 @@ gen_deck_header::write_dfm_output_to_file $rulefileheader $flowtype
 # This line is always required for the rule deck, we need to override layout data in include files
 puts $rulefileheader "DRC ICSTATION YES"
 # Write user include file 
-set default_rule_deck /home/apchen1/project/module_setup/rule_deck/lvs/modified/DFM_LVS_RC_CALIBRE_N5_1p15M_1X1Xb1Xe1Ya1Yb5Y2Yy2Z_ALRDL.1.2b
+set default_rule_deck path/to/lvs/deck
 gen_deck_header::write_user_include_to_file $rulefileheader $flowtype $db_dir(stage) $default_rule_deck
 # Done for all rule setup
 close $rulefileheader
@@ -231,7 +231,7 @@ set mapdict [dict create	layout_type $datatype(layouttype) design $db_dir(inputd
 							lsfremotestr $execopt(lsf_remote_str) ruleheader $rule_header	\
 			] 
 # Create mapdict for rule_temp::write_file to genarate final run cshfile
-set lvs_temp	[file join /home/apchen1/project/module_setup/calibre/template/lvs lvs.csh.temp]
+set lvs_temp	[file normalize [file join ./PV_flow/template/lvs lvs.csh.temp]]
 rule_temp::write_file $lvs_temp $cshfile $mapdict -permissions rwxr-xr-x
 #5>> Run target then generate drc results 
 set flowtype [string tolower $flowtype]
