@@ -1,0 +1,11 @@
+set inputlayout <<input_design>>
+set outputlayout <<outputlayout>>
+set ref_list "<<cell_ref>>"
+set topcell <<topcell>> 
+set L [layout create $inputlayout -dt_expand -preservePaths -preserveTextAttributes -preserveProperties]
+# Ref create for the next movement
+foreach ref_cell $ref_list {
+	$L create cell $ref_cell
+	$L create ref $topcell $ref_cell 0 0 0 0 1
+}
+$L gdsout $outputlayout $topcell
