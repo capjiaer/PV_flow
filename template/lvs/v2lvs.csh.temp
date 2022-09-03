@@ -1,0 +1,24 @@
+#!/bin/csh -f
+
+# This is a template for dummy genarate script
+set work_dir			= <<work_dir>>
+set lvs_verilog			= <<lvs_verilog>>
+set include_spice		= <<include_spice>>
+set outcdl				= <<outcdl>>
+set verilog_libstr		= "<<verilog_libstr>>"
+set spice_libpinstr		= "<<spice_libpinstr>>"
+set spice_librangestr	= "<<spice_librangestr>>"
+set timestamp			= <<timestamp>> 
+
+cd $work_dir
+setenv MGC_CWB_TEMP_DIR $work_dir
+v2lvs -v $lvs_verilog -s $include_spice $verilog_libstr $spice_libpinstr $spice_librangestr -o $outcdl |& tee -i v2lvs_$timestamp.log 
+rm $work_dir/v2lvs.log -rf >& /dev/null
+# Below cmds is the run cmds for debug
+#v2lvs -v <<lvs_verilog>> -s <<include_spice>> <<verilog_libstr>> <<spice_libpinstr>> <<spice_librangestr>> -o <<outcdl>> |& tee -i v2lvs_$timestamp.log 
+# Check run status
+set exitcode = $?
+if ($exitcode == 0) then
+	echo "v2lvs run faild with exitcode $exitcode"
+	exit $exitcode
+endif
