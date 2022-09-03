@@ -1,0 +1,11 @@
+set inputlayout <<rename_input_layout>>
+set outputlayout <<rename_output_layout>>
+set topcell <<topcell>> 
+
+set L [layout create $inputlayout -dt_expand -preservePaths -preserveTextAttributes -preserveProperties]
+set pretopcell [$L topcell] 
+# Rename top cell  to temp_$pretopcell
+$L cellname $pretopcell temp_$pretopcell
+$L create cell $topcell
+$L create ref $topcell temp_$pretopcell 0 0 0 0 1
+$L gdsout $outputlayout $topcell
