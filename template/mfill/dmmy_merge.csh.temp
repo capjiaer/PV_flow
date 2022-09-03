@@ -1,0 +1,24 @@
+#!/bin/csh -f
+
+# This is a template for ipmerge script
+set topcell			= <<topcell>>
+set work_dir		= <<work_dir>>
+set input_design	= <<input_design>>
+set Dummymerge_list	= <<Dummymerge_list>>
+set merged_file		= <<merged_file>>
+set merge_mode      = <<merge_mode>>
+set timestamp		= <<timestamp>> 
+
+cd $work_dir
+setenv MGC_CWB_TEMP_DIR $work_dir
+calibredrv -a layout filemerge -in $input_design -in $Dummymerge_list -out $merged_file -topcell $topcell -mode $merge_mode -reportconflicts |& tee -i calibre_merge_dummy_$timestamp.log 
+
+# Check run status
+set exitcode = $?
+if ($exitcode == 0 && -e $merged_file) then
+	echo "Merge finished success, please check $merged_file"
+else
+	echo "Merge faild with exitcode $exitcode"
+	exit $exitcode
+
+endif
