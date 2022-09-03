@@ -1,0 +1,5 @@
+LAUNCH CLUSTER WAIT 240 COUNT 32 MINCOUNT 16
+REMOTE COMMAND bsub ARGUMENTS [-q syn -J CalRemote[1-4] -n 8 -R "select[hname!='%h']" /home/apchen1/project/module_setup/calibre/lsf_remote/launch_remote.sh]
+
+// Uncomment the following line for PERC P2P/CD runs at full chip level (this make use of the master server)
+// REMOTE COMMAND /home/apchen1/project/module_setup/calibre/lsf_remote/launch_local.sh ARGUMENTS [32]
