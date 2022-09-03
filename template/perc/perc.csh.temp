@@ -1,0 +1,26 @@
+#!/bin/csh -f
+
+# This is a template for dummy genarate script
+set work_dir		= <<work_dir>>
+set layout_type		= <<layout_type>>
+set topcell			= <<topcell>>
+set timestamp		= <<timestamp>> 
+set exec_opt_str	= "<<execoptstr>>"
+set lsf_remote_str	= "<<lsfremotestr>>"
+set rule_header		= <<ruleheader>>
+set log_file		= <<logfile>>
+set extra_opt		= "<<extra_opt>>"
+
+cd $work_dir
+setenv MGC_CWB_TEMP_DIR $work_dir
+rm -rf *.db *.density *.rep *.RDB >& /dev/null
+
+${extra_opt}calibre $exec_opt_str $lsf_remote_str $rule_header |& tee -i $log_file 
+# Below cmds is the run cmds for debug
+#<<extra_opt>>calibre <<execoptstr>> <<lsfremotestr>> <<ruleheader>> |& tee -i <<logfile>> 
+# Check run status
+set exitcode = $?
+if ($exitcode == 0) then
+	echo "PERC run faild with exitcode $exitcode" 
+	exit $exitcode
+endif
