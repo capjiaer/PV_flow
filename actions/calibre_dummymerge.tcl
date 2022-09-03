@@ -74,7 +74,7 @@ set merged_file [file join $::env(BASE_DIR) data $::env(TOP_MODULE).$target_acti
 # Create mapdict for rule_temp::write_file to genarate final run cshfile
 set mapdict [dict create input_design $db_dir(temp_output) Dummymerge_list $Dummymerge_list merged_file $merged_file merge_mode $merge_mode timestamp $timestamp work_dir $workdir topcell $::env(TOP_MODULE)] 
 
-set merge_temp	[file join /home/apchen1/project/module_setup/calibre/template/mfill/ dummy_merge.csh.temp]
+set merge_temp	[file normalize [file join ./PV_flow/template/mfill/ dummy_merge.csh.temp]]
 #4>> Write final run file
 rule_temp::write_file $merge_temp $cshfile $mapdict -permissions rwxr-xr-x
 #4.1 Run target 
